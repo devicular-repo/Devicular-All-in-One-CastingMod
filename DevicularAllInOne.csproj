@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Devicular All-in-One: Devicular Caster, Auto Ref and Replay in ONE DLL.
+    Everything opens from the Caster menu (Tab): the replay recorder and viewer are columns in it, and its
+    Match column opens the Auto Ref panel (F6 still works too).
+
+    Build:  dotnet build -c Release
+    The DLL is copied to the folder above this one (gtr stuff\DevicularAllInOne.dll). Nothing is installed into the game.
+    If your game is somewhere else, add -p:GamePath="D:\path\to\Gorilla Tag".
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>DevicularAllInOne</AssemblyName>
+    <RootNamespace>Devicular</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <DebugType>embedded</DebugType>
+    <Deterministic>true</Deterministic>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <!-- CS0649/CS0414: shared code has fields a given part never sets. -->
+    <NoWarn>$(NoWarn);MSB3277;MSB3243;CS0618;CS0649;CS0414</NoWarn>
+
+    <GamePath Condition="'$(GamePath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag</GamePath>
+    <ManagedPath>$(GamePath)\Gorilla Tag_Data\Managed</ManagedPath>
+    <OutputCopyDir Condition="'$(OutputCopyDir)' == ''">$(MSBuildThisFileDirectory)..\</OutputCopyDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The shared code's namespace, so every file can use it without a using line. -->
+    <Using Include="Devicular" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GameDll Include="$(ManagedPath)\*.dll"
+             Exclude="$(ManagedPath)\System*.dll;$(ManagedPath)\mscorlib.dll;$(ManagedPath)\netstandard.dll;$(ManagedPath)\Mono.*.dll;$(ManagedPath)\Microsoft.*.dll" />
+    <Reference Include="@(GameDll)" Private="false" />
+    <Reference Include="$(GamePath)\BepInEx\core\BepInEx.dll" Private="false" />
+    <Reference Include="$(GamePath)\BepInEx\core\0Harmony.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The announcer's voice lines (Auto Ref). -->
+    <EmbeddedResource Include="Sounds\*.wav" LogicalName="AutoRef.Sounds.%(Filename)%(Extension)" />
+    <!-- The Steam and Meta logos for the player list. -->
+    <EmbeddedResource Include="Images\*.png" LogicalName="Devicular.Images.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <Target Name="CopyAllInOne" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(OutputCopyDir)" />
+    <Message Importance="high" Text="DevicularAllInOne.dll copied to $([System.IO.Path]::GetFullPath('$(OutputCopyDir)'))" />
+  </Target>
+
+</Project>

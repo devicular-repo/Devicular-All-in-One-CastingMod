@@ -1,0 +1,7 @@
+C:\Users\aradus\Desktop\gtr stuff\Devicular All-in-One source\bin\Release\DevicularAllInOne.dll
+C:\Users\aradus\Desktop\gtr stuff\Devicular All-in-One source\obj\Release\DevicularAllInOne.csproj.AssemblyReference.cache
+C:\Users\aradus\Desktop\gtr stuff\Devicular All-in-One source\obj\Release\DevicularAllInOne.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aradus\Desktop\gtr stuff\Devicular All-in-One source\obj\Release\DevicularAllInOne.AssemblyInfoInputs.cache
+C:\Users\aradus\Desktop\gtr stuff\Devicular All-in-One source\obj\Release\DevicularAllInOne.AssemblyInfo.cs
+C:\Users\aradus\Desktop\gtr stuff\Devicular All-in-One source\obj\Release\DevicularAllInOne.csproj.CoreCompileInputs.cache
+C:\Users\aradus\Desktop\gtr stuff\Devicular All-in-One source\obj\Release\DevicularAllInOne.dll
